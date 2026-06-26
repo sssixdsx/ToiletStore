@@ -3,39 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои приложения</title>
-    <link rel="stylesheet" href="style.css">
+    <title>MrBachok</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #533483);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Летающие унитазы на фоне */
+        .floating-toilets {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-toilet {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatToilet 15s linear infinite;
+            opacity: 0.08;
+        }
+
+        .floating-toilet:nth-child(1) { left: 5%; animation-duration: 12s; font-size: 3rem; }
+        .floating-toilet:nth-child(2) { left: 20%; animation-duration: 18s; font-size: 2.5rem; animation-delay: -3s; }
+        .floating-toilet:nth-child(3) { left: 40%; animation-duration: 14s; font-size: 4rem; animation-delay: -7s; }
+        .floating-toilet:nth-child(4) { left: 60%; animation-duration: 20s; font-size: 2rem; animation-delay: -5s; }
+        .floating-toilet:nth-child(5) { left: 80%; animation-duration: 16s; font-size: 3.5rem; animation-delay: -10s; }
+        .floating-toilet:nth-child(6) { left: 90%; animation-duration: 13s; font-size: 2.8rem; animation-delay: -2s; }
+
+        @keyframes floatToilet {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0.05; }
+            50% { opacity: 0.1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0.05; }
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Шапка с унитазом */
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .toilet-icon {
+            font-size: 6rem;
+            display: block;
+            animation: bounceToilet 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.3));
+        }
+
+        @keyframes bounceToilet {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f7971e, #ffd200, #f7971e);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            letter-spacing: 3px;
+            text-shadow: 0 0 50px rgba(247, 151, 30, 0.3);
+            margin-bottom: 5px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .subtitle span {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        /* Карточки */
+        .cards {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            padding: 35px 25px;
+            border-radius: 30px;
+            width: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .card .icon {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.2) rotate(-10deg);
+        }
+
+        .card h2 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card .desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .card .specs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .card .specs span {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-pc {
+            background: linear-gradient(135deg, #0078d7, #005a9e);
+            color: white;
+            box-shadow: 0 8px 30px rgba(0, 120, 215, 0.3);
+        }
+
+        .btn-pc:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 120, 215, 0.5);
+        }
+
+        .btn-android {
+            background: linear-gradient(135deg, #3ddc84, #1a8a4a);
+            color: white;
+            box-shadow: 0 8px 30px rgba(61, 220, 132, 0.3);
+        }
+
+        .btn-android:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(61, 220, 132, 0.5);
+        }
+
+        .btn .emoji {
+            margin-right: 8px;
+        }
+
+        /* Дополнительный блок — фишки */
+        .features {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0 40px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 25px;
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            font-weight: 300;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+
+        .feature-item .fi-emoji {
+            margin-right: 8px;
+        }
+
+        /* Футер */
+        footer {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        footer .copy {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        footer .copy span {
+            color: rgba(255, 215, 0, 0.2);
+            transition: color 0.3s;
+        }
+
+        footer .copy span:hover {
+            color: #ffd700;
+        }
+
+        footer .creator {
+            margin-top: 5px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 1px;
+        }
+
+        footer .creator a {
+            color: rgba(255, 215, 0, 0.15);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer .creator a:hover {
+            color: #ffd700;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 700px) {
+            h1 { font-size: 2.8rem; }
+            .toilet-icon { font-size: 4rem; }
+            .card { width: 100%; max-width: 320px; }
+            .features { gap: 10px; }
+            .feature-item { font-size: 0.75rem; padding: 8px 18px; }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🚀 Мои приложения</h1>
-        <p class="subtitle">Скачай для своей платформы</p>
 
+    <!-- Летающие унитазы на фоне -->
+    <div class="floating-toilets">
+        <div class="floating-toilet">🚽</div>
+        <div class="floating-toilet">🚽</div>
+        <div class="floating-toilet">🚽</div>
+        <div class="floating-toilet">🚽</div>
+        <div class="floating-toilet">🚽</div>
+        <div class="floating-toilet">🚽</div>
+    </div>
+
+    <div class="container">
+
+        <!-- Шапка -->
+        <div class="header">
+            <span class="toilet-icon">🚽</span>
+            <h1>MrBachok</h1>
+            <p class="subtitle">
+                ✦ <span>Только лучшее</span> для твоего комфорта ✦
+            </p>
+        </div>
+
+        <!-- Карточки приложений -->
         <div class="cards">
-            <!-- Windows приложение -->
-            <div class="card windows">
-                <div class="icon">💻</div>
-                <h2>Windows</h2>
-                <p>Десктоп приложение на C#</p>
-                <a href="https://github.com/sssixds/my-landing/releases/download/v1.0/MyApp.exe" class="btn">
-                    ⬇ Скачать .exe
+            <!-- PC версия -->
+            <div class="card">
+                <span class="icon">🖥️</span>
+                <h2>PC версия</h2>
+                <p class="desc">Мощное приложение для Windows</p>
+                <div class="specs">
+                    <span>⚡ Быстро</span>
+                    <span>🔒 Безопасно</span>
+                    <span>📦 Офлайн</span>
+                </div>
+                <a href="#" class="btn btn-pc">
+                    <span class="emoji">⬇</span> Скачать для PC
                 </a>
             </div>
 
-            <!-- Android приложение -->
-            <div class="card android">
-                <div class="icon">📱</div>
-                <h2>Android</h2>
-                <p>Мобильное приложение на Kotlin</p>
-                <a href="https://github.com/sssixdsx/my-landing/releases/download/v1.0/MyApp.apk" class="btn">
-                    ⬇ Скачать .apk
+            <!-- Android версия -->
+            <div class="card">
+                <span class="icon">📱</span>
+                <h2>Android версия</h2>
+                <p class="desc">Удобное приложение для телефона</p>
+                <div class="specs">
+                    <span>📱 Оптимизировано</span>
+                    <span>🎨 Современный дизайн</span>
+                    <span>🔐 Надёжно</span>
+                </div>
+                <a href="#" class="btn btn-android">
+                    <span class="emoji">⬇</span> Скачать для Android
                 </a>
             </div>
         </div>
 
+        <!-- Дополнительные фишки (чтобы не пусто) -->
+        <div class="features">
+            <span class="feature-item"><span class="fi-emoji">🚀</span> Мгновенная загрузка</span>
+            <span class="feature-item"><span class="fi-emoji">🛡️</span> 100% безопасность</span>
+            <span class="feature-item"><span class="fi-emoji">💎</span> Премиум качество</span>
+            <span class="feature-item"><span class="fi-emoji">🔄</span> Регулярные обновления</span>
+            <span class="feature-item"><span class="fi-emoji">📞</span> Поддержка 24/7</span>
+        </div>
+
+        <!-- Футер -->
         <footer>
-            <p>Все обновления в <a href="https://github.com/sssixdsx/my-landing/releases">Releases</a></p>
+            <div class="copy">
+                © 2026 <span>MrBachok</span>. Все права защищены.
+            </div>
+            <div class="creator">
+                Создал <a href="#">Чибизов ИС-941</a>
+            </div>
         </footer>
+
     </div>
+
 </body>
 </html>
