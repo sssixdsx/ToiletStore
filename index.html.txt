@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои приложения</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Мои приложения</h1>
+        <p class="subtitle">Скачай для своей платформы</p>
+
+        <div class="cards">
+            <!-- Windows приложение -->
+            <div class="card windows">
+                <div class="icon">💻</div>
+                <h2>Windows</h2>
+                <p>Десктоп приложение на C#</p>
+                <a href="https://github.com/sssixds/my-landing/releases/download/v1.0/MyApp.exe" class="btn">
+                    ⬇ Скачать .exe
+                </a>
+            </div>
+
+            <!-- Android приложение -->
+            <div class="card android">
+                <div class="icon">📱</div>
+                <h2>Android</h2>
+                <p>Мобильное приложение на Kotlin</p>
+                <a href="https://github.com/sssixdsx/my-landing/releases/download/v1.0/MyApp.apk" class="btn">
+                    ⬇ Скачать .apk
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Все обновления в <a href="https://github.com/sssixdsx/my-landing/releases">Releases</a></p>
+        </footer>
+    </div>
+</body>
+</html>
